@@ -6,7 +6,7 @@
  Copyright   : copyright notice
  Description : Message in a bottle in C, Ansi-style
  ============================================================================
- */
+*/
 
 /*
  *
@@ -76,7 +76,7 @@ typedef struct {
         int full, empty;
         pthread_mutex_t *mut;	//a mutex (binary semaphore) to guard access to queue (i.e. buf)
     	sem_t  boxesAvailable;	//number of free elements available in the queue (free space) initially a semaphore for QUEUESIZE
-    	sem_t  boxesFull;		//the number of elements in the queue - initially a semaphore of size 0
+    	sem_t  boxesFull;	//the number of elements in the queue - initially a semaphore of size 0
     	int ETHERs;
     	int TRUNKs;
     	int waiting;
@@ -152,13 +152,13 @@ int main (void )
 
 	ETHER *lock=NULL;
 	TRUNK *lockTr1,*lockTr2,*lockTr3,*lockTr4 ;
-    queue *fifo=NULL;
+	queue *fifo=NULL;
 
 
 
 	lock = initlock ();
 	if (lock==NULL)
-			return EXIT_FAILURE;
+		return EXIT_FAILURE;
 
 	fifo=lock->q;
 	if (fifo==NULL)
@@ -166,7 +166,7 @@ int main (void )
 
 	a1 = newRWargs (lock, 1, ETHER1,CAPACITYETHER, fifo);
 	if (a1==NULL)
-			return EXIT_FAILURE;
+		return EXIT_FAILURE;
 
 
 	pthread_create (&w1, NULL, runETHER, a1);
@@ -193,8 +193,8 @@ int main (void )
 	pthread_join (r4, NULL);
 
 	free (a1); free (a2); free (a3); free (a4); free (a5);
-    queueDelete (lock->q);
-    free(lock);free(lockTr1),free(lockTr2),free(lockTr3),free(lockTr4);
+    	queueDelete (lock->q);
+    	free(lock);free(lockTr1),free(lockTr2),free(lockTr3),free(lockTr4);
 
 	return EXIT_SUCCESS;
 }
@@ -240,20 +240,18 @@ void *runTRUNK (void *args)
 
 	fifo=a->fifo;
 
-    printf ("<--runTRUNK%d\n",a->id);
+	printf ("<--runTRUNK%d\n",a->id);
 
-
-
-    	//process capacity
+    	//processes capacity
     	for (i = 0; i < a->lock->Capacity; i++) {
 
 
-            //each time a thread waits on this semaphore, the count decreases until boxesAvailable=0 (as defined)
+	    //each time a thread waits on this semaphore, the count decreases until boxesAvailable=0 (as defined)
             //when boxesAvailable=0 ,the thread blocks, otherwise the thread can go further
             sem_wait(&fifo->boxesAvailable);
 
 
-        	pthread_mutex_lock (fifo->mut);
+	    pthread_mutex_lock (fifo->mut);
             queueDel (fifo, &d); //threadSafe op
             pthread_mutex_unlock (fifo->mut);
 
@@ -284,9 +282,9 @@ void *runETHER (void *args)
 	a->lock->Capacity=a->Capacity;
 	a->lock->delay=a->delay;
 	a->lock->q=a->fifo;
-    fifo = (queue*) (a->fifo);
+	fifo = (queue*) (a->fifo);
 
-    printf ("--> runETHER %d\n",a->id);
+	printf ("--> runETHER %d\n",a->id);
 
 		for (i = 0; i < a->lock->Capacity; i++) {
 
@@ -323,15 +321,14 @@ ETHER *initlock (void)
 {
 	ETHER *lock;
 
-
-	lock = (ETHER *)malloc (sizeof (ETHER));
+    	lock = (ETHER *)malloc (sizeof (ETHER));
 	if (lock == NULL) return (NULL);
 
-    lock->q = queueInit ();
-    if (lock->q ==  NULL) {
-            fprintf (stderr, "initlock: Main Queue Init failed.\n");
-			return (NULL);
-    }
+    	lock->q = queueInit ();
+    	if (lock->q ==  NULL) {
+        	fprintf (stderr, "initlock: Main Queue Init failed.\n");
+		return (NULL);
+    	}
 
 	lock->id=0;
 	lock->waiting = 0;
