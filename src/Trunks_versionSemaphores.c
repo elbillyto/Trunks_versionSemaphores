@@ -12,22 +12,20 @@
  *
  *	Short	: A solution to the multi-TRUNK's, one ETHER problem.
  *	The producer does the following repeatedly:
-
-EHTER produce:
-    WAIT (emptyCount)
-    WAIT (useQueue)
-    putItemIntoQueue(item)
-    SiGNAL (useQueue)
-    SiGNAL (fullCount)
-
-The consumer does the following repeatedly:
-
-TRUNK consume:
-    WAIT (fullCount)
-    WAIT (useQueue)
-    item ← getItemFromQueue()
-    SIGNAL (useQueue)
-    SIGNAL (emptyCount)
+ *ETHER produce:
+ *	WAIT (boxesFull)
+ *	ACQUIRE (Mutext)
+ *	item ← PUTboxinQueue
+ *	RELEASE (Mutext)
+ *	SiGNAL (boxesAvailable)
+ *
+ *The consumer does the following repeatedly:
+ *TRUNK consume:
+ *	WAIT (boxesAvailable)
+ *	ACQUIRE (Mutext)
+ *	item ← GETboxFromQueue
+ *	RELEASE (Mutext)
+ *	SIGNAL (boxesFull)
  *
  */
 #include <pthread.h>
