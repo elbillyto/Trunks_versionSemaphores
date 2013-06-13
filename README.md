@@ -2,8 +2,8 @@ Trunks_versionSemaphores
 ========================
 
 A solution to the multi-TRUNK's, one ETHER problem using semaphore.
- The producer does the following repeatedly:
 
+The producer does the following repeatedly:
 ETHER produce:
  * WAIT (boxesFull)
  * ACQUIRE (Mutext)
@@ -11,11 +11,11 @@ ETHER produce:
  * RELEASE (Mutext)
  * SiGNAL (boxesAvailable)
 
- The consumer does the following repeatedly:
+The consumer does the following repeatedly:
 TRUNK consume:
  * WAIT (boxesAvailable)
  * ACQUIRE (Mutext)
- * item ← takeItemFromQueue
+ * item ← GETboxFromQueue
  * RELEASE (Mutext)
  * SIGNAL (boxesFull)
 
