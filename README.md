@@ -1,8 +1,8 @@
 Trunks_versionSemaphores
 ========================
 
- A solution to the multi-TRUNK's, one ETHER problem using semaphore.
- The producer does the following repeatedly:
+A solution to the multi-TRUNK's, one ETHER problem using semaphore.
+The producer does the following repeatedly:
 
 ETHER produce:
  * WAIT (emptyCount)
