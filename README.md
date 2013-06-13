@@ -2,23 +2,22 @@ Trunks_versionSemaphores
 ========================
 
 A solution to the multi-TRUNK's, one ETHER problem using semaphore.
-The producer does the following repeatedly:
+ The producer does the following repeatedly:
 
 ETHER produce:
- * WAIT (emptyCount)
- * WAIT (useQueue)
- * putItemIntoQueue(item)
- * SiGNAL (useQueue)
- * SiGNAL (fullCount)
+ * WAIT (boxesFull)
+ * ACQUIRE (Mutext)
+ * item ← PUTboxinQueue
+ * RELEASE (Mutext)
+ * SiGNAL (boxesAvailable)
 
-The consumer does the following repeatedly:
-
+ The consumer does the following repeatedly:
 TRUNK consume:
- * WAIT (fullCount)
- * WAIT (useQueue)
- * item ← getItemFromQueue()
- * SIGNAL (useQueue)
- * SIGNAL (emptyCount)
+ * WAIT (boxesAvailable)
+ * ACQUIRE (Mutext)
+ * item ← takeItemFromQueue
+ * RELEASE (Mutext)
+ * SIGNAL (boxesFull)
 
 
   @brief: if CAPACITYETHER is superior to a multiple of CAPACITYTRUNK (CAPACITYETHER%CAPACITYTRUNK>0),
