@@ -5,20 +5,20 @@ Short  : A solution to the multi-TRUNK's, one ETHER problem using semaphore.
  *	The producer does the following repeatedly:
 
 EHTER produce:
-*WAIT (emptyCount)
-*WAIT (useQueue)
-*putItemIntoQueue(item)
-*SiGNAL (useQueue)
-*SiGNAL (fullCount)
+ * WAIT (emptyCount)
+ * WAIT (useQueue)
+ * putItemIntoQueue(item)
+ * SiGNAL (useQueue)
+ * SiGNAL (fullCount)
 
 The consumer does the following repeatedly:
 
 TRUNK consume:
-*WAIT (fullCount)
-*WAIT (useQueue)
-*item ← getItemFromQueue()
-*SIGNAL (useQueue)
-    **SIGNAL (emptyCount)
+ * WAIT (fullCount)
+ * WAIT (useQueue)
+ * item ← getItemFromQueue()
+ * SIGNAL (useQueue)
+ * SIGNAL (emptyCount)
 
  * @brief: if CAPACITYETHER is superior to a multiple of CAPACITYTRUNK (CAPACITYETHER%CAPACITYTRUNK>0),
  * subsequent boxes sent by ETHER are lost because TRUNKS won't have the capacity to process it
